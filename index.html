@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f3ebfa">
-  <base href="/assets/">
   <!--link rel="icon" href="./img/" type="image/png"-->
   <!--link rel="stylesheet" href="./css/style.css"-->
   <title>JOKE</title>
@@ -12,23 +11,11 @@
 <style>
 @font-face {
   font-family: "cardr";
-  src: url("./fonts/cardr.ttf");
+  src: url("./assets/fonts/cardr.ttf");
 }
 @font-face {
   font-family: "cardn";
-  src: url("./fonts/cardn.ttf");
-}
-@font-face {
-  font-family: "en";
-  src: url("./fonts/regular.woff2");
-}
-@font-face {
-  font-family: "mono";
-  src: url("./fonts/mono.woff2");
-}
-@font-face {
-  font-family: "fa";
-  src: url("./fonts/estedad.woff2");
+  src: url("./assets/fonts/cardn.ttf");
 }
 * {
   padding: 0;
@@ -66,8 +53,6 @@ html,body {
 }
 body {
   background-color: #eedcff;
-  /*background-color: #ffe8e9;
-  background-color: #000;*/
   perspective: calc(var(--vmin));
   overflow-y: auto;
 }
@@ -203,7 +188,6 @@ body {
   height: calc(var(--vmin)/100*10);
   transform-origin: center;
   user-select: none;
-  /*transform: translateZ(calc(var(--vmin)/100*5));*/
 }
 #trump_board div {
   display: none;
@@ -342,6 +326,6 @@ const fullscreen = () => {
 }
 
 </script>
-<script src="./js/game.js"></script>
-<script src="./js/screen.js"></script>
+<script src="./assets/js/game.js"></script>
+<script src="/assets/js/screen.js"></script>
 </html>
