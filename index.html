@@ -239,7 +239,7 @@ body {
 
 #counter_t1, #counter_t2 {
   position: absolute;
-  top: 5%;
+  top: 3%;
   background-color: #fff;
   display: flex;
   justify-content: center;
@@ -247,15 +247,16 @@ body {
   width: calc(var(--vmin)/100*10);
   height: calc(var(--vmin)/100*10);
   font-size: calc(var(--vmin)/100*5);
-  border-radius: calc(var(--vmin)/100*2);
+  border-radius: calc(var(--vmin)/100*3);
   margin: calc(var(--vmin)/100*2);
   transition: opacity 0.5s ease;
+  font-weight: 900;
 }
 #counter_t1 {
-  left: 5%;
+  left: 3%;
 }
 #counter_t2 {
-  right: 5%;
+  right: 3%;
 }
 
 </style>
@@ -821,7 +822,7 @@ const log = (txt) => {
   log_board.scrollTop = log_board.scrollHeight;
 };
 
-log("<span style=\"font-family:'cardr'\">JOKE</span> v0.3 Beta - Nxrix<br>");
+log("<span style=\"font-family:'cardr'\">JOKE</span> v0.3.2 Beta - Nxrix<br>");
 start_btn.onclick = start;
 </script>
 </html>
