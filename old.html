@@ -1,3 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3ebfa">
+  <!--link rel="icon" href="./img/" type="image/png"-->
+  <!--link rel="stylesheet" href="./css/style.css"-->
+  <title>JOKE</title>
+</head>
+<style>
+@font-face {
+  font-family: "cardr";
+  src: url("./assets/fonts/cardr.ttf");
+}
+@font-face {
+  font-family: "cardn";
+  src: url("./assets/fonts/cardn.ttf");
+}
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+  text-align: auto !important;
+  unicode-bidi: plaintext !important;
+  -webkit-tap-highlight-color: transparent;
+}
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background-color: #0000;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #2253;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #2255;
+}
+::-webkit-scrollbar-corner {
+  background-color: #0000;
+}
+html,body {
+  background-color: #fff;
+  color: #000;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+body {
+  background-color: #eedcff;
+  perspective: calc(var(--vmin));
+  overflow-y: auto;
+}
+
+.cards {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--vmin);
+  height: var(--vmin);
+  top: calc((var(--vh) - var(--vmin))/2);
+  left: calc((var(--vw) - var(--vmin))/2);
+  transform-style: preserve-3d;
+  z-index: -1;
+}
+.cards .card {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  width: calc(var(--vmin)/100*15);
+  height: calc(var(--vmin)/100*20);
+  transform-origin: center;
+  transform-style: preserve-3d;
+  transition: transform 0.25s ease;
+  user-select: none;
+}
+
+.cards .card .front {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  font-size: calc(var(--vmin)/100*5);
+  font-family: "cardr";
+  color: #1d1826;
+  transition: padding 0.125s ease,font-size 0.125s ease;
+  /*box-shadow: 0 0 5px #1142;*/
+}
+.cards .card.t2 .front {
+  /*box-shadow: 0 0 5px #00f1;*/
+  padding: 0 70% 80% 0;
+  font-size: calc(var(--vmin)/100*2);
+  cursor: pointer;
+}
+.cards .card .front::after {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.cards .card.t2 .front::after {
+  content: attr(after-content);
+  color: attr(after-color);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  font-size: calc(var(--vmin)/100*3);
+}
+.cards .card .front {
+  background-color: #fff;
+  border-radius: calc(var(--vmin)/100*2);
+}
+.cards .card.red .front {
+  color: #de1b45;
+}
+.cards .card .back {
+  background-image: url("./back.png");
+  background-size: cover;
+  border-radius: calc(var(--vmin)/100*2);
+  transform: translateZ(-0.5px);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+#select_trump_board {
+  background-color: #0053;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  --margin: calc(var(--vmin)/100*3);
+  width: calc(var(--vw) - var(--margin)*2);
+  height: calc(var(--vh) - var(--margin)*2);
+  margin: var(--margin) var(--margin) 0 var(--margin);
+  padding: calc((var(--vh) - var(--vmin))/2) calc((var(--vw) - var(--vmin))/2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  border-radius: calc(var(--vmin)/100*5);
+}
+#select_trump_board div {
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 20%;
+  box-sizing: border-box;
+  margin: 5%;
+  border-radius: calc(var(--vmin)/100*2.5);
+  font-size: calc(var(--vmin)/100*5);
+  font-family: "cardr";
+  user-select: none;
+  transition: transform 0.125s ease;
+}
+#select_trump_board div:hover {
+  transform: scale(1.125);
+}
+#select_trump_board div.red {
+  color: #de1b45;
+}
+#select_trump_board.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#trump_board {
+  background-color: #fff;
+  border-radius: calc(var(--vmin)/100*2);
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  width: calc(var(--vmin)/100*10);
+  height: calc(var(--vmin)/100*10);
+  transform-origin: center;
+  user-select: none;
+}
+#trump_board div {
+  display: none;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  font-size: calc(var(--vmin)/100*5);
+  font-family: "cardr";
+}
+#trump_board div.red {
+  color: #de1b45;
+}
+
+#start_btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc(var(--vmin)/100*10);
+  height: calc(var(--vmin)/100*10);
+  font-size: calc(var(--vmin)/100*8);
+  transform: translateY(calc(var(--vmin)/100*35)) rotateX(-40deg);
+  transition: transform 0.125s ease;
+  user-select: none;
+}
+#start_btn:hover {
+  transform: translateY(calc(var(--vmin)/100*35)) rotateX(-40deg) scale(1.125);
+}
+
+#log_board {
+  height: calc(var(--vh) - var(--margin));
+  overflow-y: auto;
+  --margin: calc(var(--vmin)/100*3);
+  margin: calc(var(--vh) + var(--margin)) var(--margin) 0 var(--margin);
+  padding: calc(var(--vmin)/100*5);
+  background: #fff;
+  color: #1d1826;
+  border-radius: calc(var(--vmin)/100*5) calc(var(--vmin)/100*5) 0 0;
+}
+#log_board .red {
+  color: #de1b45;
+}
+
+</style>
+<body>
+  <div id="game_board" class="cards">
+    <div id="trump_board">
+      <div class="red">♦</div>
+      <div>♣</div>
+      <div class="red">♥</div>
+      <div>♠</div>
+    </div>
+    <div id="start_btn">🃏</div>
+  </div>
+  <div id="select_trump_board">
+    <div class="red">♦</div>
+    <div>♣</div>
+    <div class="red">♥</div>
+    <div>♠</div>
+  </div>
+  <div id="log_board"></div>
+</body>
+<script src="/assets/js/screen.js"></script>
+<script>
+
+const set_transform = (id,n,v) => {
+  const e = document.getElementById(id);
+  let vs = e.style.transform.split(" ");
+  const s = vs[n].indexOf("(");
+  vs[n] = vs[n].slice(0,s+1)+v+")";
+  e.style.transform = vs.join(" ");
+}
+
+function spos(id,d) {
+  if ( d.s!=null) set_transform(id,6,d.s);
+  if ( d.x!=null) set_transform(id,0,`calc(var(--vmin)/100*${d.x})`);
+  if ( d.y!=null) set_transform(id,1,`calc(var(--vmin)/100*${d.y})`);
+  if ( d.z!=null) set_transform(id,2,`calc(var(--vmin)/100*${d.z})`);
+  if (d.rx!=null) set_transform(id,3,d.rx+"deg");
+  if (d.ry!=null) set_transform(id,4,d.ry+"deg");
+  if (d.rz!=null) set_transform(id,5,d.rz+"deg");
+}
+
+const suits  = ["♦","♣","♥","♠"];
+const suits_u2 = ["<span class=\"red\">♦</span>","♣","<span class=\"red\">♥</span>","♠"];
+//const suits = ["[","]","{","}"];
+const ranks = ["2","3","4","5","6","7","8","9","10","J","Q","K","A"];
+const gameBoard = document.getElementById("game_board");
+
+suits.forEach((suit,i) => {
+  ranks.forEach((rank,j) => {
+    const card = document.createElement("div");
+    card.classList.add("card");
+    //card.classList.add("t2");
+    if (suit=="♦"||suit=="♥") card.classList.add("red");
+    card.id = `${rank}-${suit}`;
+    card.style.transform = "translateX(0) translateY(0) translateZ("+(i*13+j)/2+"px) rotateX(0) rotateY(180deg) rotateZ(0) scale(1)";
+    card.innerHTML = `
+      <div class="front">${rank}<br>${suit}</div>
+      <div class="back"></div>
+    `;
+    const front = card.querySelector(".front");
+    front.setAttribute("after-content",rank+suit);
+    front.setAttribute("after-color",(suit=="["||suit=="{")?"#1d1826":"#de1b45");
+    gameBoard.appendChild(card);
+  });
+});
+
+const reset_cards = () => {
+  const il = (i) => {
+    const e = document.getElementById(`${ranks[i%13]}-${suits[Math.floor(i/13)]}`);
+    e.style.transform = "translateX(0) translateY(0) translateZ("+(i)/2+"px) rotateX(0) rotateY(180deg) rotateZ(0) scale(1)";
+    e.classList.remove("t2");
+    if (i<51) setTimeout(il,25,i+1);
+  }
+  il(0);
+}
+game_board.style.transform = "translateY(-10%) rotateX(40deg) rotateZ(0deg)";
+
+const fullscreen = () => {
+  var div = document.documentElement;
+  if (!document.mozFullScreen && !document.webkitFullScreen) {
+    if (div.mozRequestFullScreen) {   
+      div.mozRequestFullScreen();
+    } else {
+      div.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+    }
+  } else {
+    if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else {
+      document.webkitCancelFullScreen();
+    }
+  }
+}
+
+</script>
+<script>
 const rankValue = {
   "2": 1,  "3": 2,  "4": 3,  "5": 4,  "6": 5,  "7": 6, "8": 7,
   "9": 8,  "10": 9, "J": 10, "Q": 11, "K": 12, "A": 13
@@ -466,3 +794,5 @@ const log = (txt) => {
 
 log("<span style=\"font-family:'cardr'\">JOKE</span> v0.1 Beta - Nxrix<br>");
 start_btn.onclick = start;
+</script>
+</html>
