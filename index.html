@@ -537,15 +537,14 @@ const rot = (n,r) => {
 }
 
 const fix_hand = (j) => {
-  const j2 = (j+king)&3;
-  let m = players[j2].hand.length;
+  let m = players[j].hand.length;
   let s = m/2-0.5;
   const k = 4;
   for (let i=0;i<m;i++) {
-    const card = players[j2].hand[i];
+    const card = players[j].hand[i];
     let b = (1-Math.sin(i*Math.PI/2/s))*s/4;
     if (s<1) b=0;
-    switch (j2) {
+    switch (j) {
       case 0:
         set_position(`${card.rank}-${card.suit}`,{
            x: (i-s)*k*1.4,
@@ -602,7 +601,7 @@ const fix_hand = (j) => {
 }
 
 const drop_hands = (j=0) => {
-  fix_hand(j);
+  fix_hand((j+king)&3);
   if (j<3) setTimeout(drop_hands,250,j+1);
 };
 
@@ -882,7 +881,7 @@ const log = (txt) => {
   log_board.scrollTop = log_board.scrollHeight;
 };
 
-log("<span>JOKE</span> v0.4.2 Beta - Nxrix<br>");
+log("<span>JOKE</span> v0.4.3 Beta - Nxrix<br>");
 //king = 0;
 start_btn.onclick = start;
 </script>
