@@ -536,7 +536,7 @@ const rot = (n,r) => {
   return { x: n*Math.cos(t) , y: n*Math.sin(t) };
 }
 
-const drop_hands = (j=0) => {
+const fix_hand = (j) => {
   const j2 = (j+king)&3;
   let m = players[j2].hand.length;
   let s = m/2-0.5;
@@ -599,11 +599,15 @@ const drop_hands = (j=0) => {
         break;
     }
   }
+}
+
+const drop_hands = (j=0) => {
+  fix_hand(j);
   if (j<3) setTimeout(drop_hands,250,j+1);
 };
 
 const drop_card = (p,card) => {
-  drop_hands();
+  fix_hand(p);
   const nr = Math.random()*10-5;
   const nx = Math.random()*5-2.5;
   const ny = Math.random()*5-2.5;
@@ -878,7 +882,7 @@ const log = (txt) => {
   log_board.scrollTop = log_board.scrollHeight;
 };
 
-log("<span>JOKE</span> v0.4.0 Beta - Nxrix<br>");
+log("<span>JOKE</span> v0.4.2 Beta - Nxrix<br>");
 king = 0;
 start_btn.onclick = start;
 </script>
